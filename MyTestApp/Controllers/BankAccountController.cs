@@ -34,7 +34,19 @@ namespace MyTestApp.Controllers
 
             return bankAccount;
         }
+       
+        [HttpGet("/getbalance/{id}")]
+        public async Task<ActionResult<decimal>> GetBankAccountBalance(long id)
+        {
+            var bankAccount = await _context.BankAccounts.FindAsync(id);
 
+            if (bankAccount == null)
+            {
+                return NotFound();
+            }
+
+            return bankAccount.Balance;
+        }
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBankAccount(long id, BankAccount bankAccount)
